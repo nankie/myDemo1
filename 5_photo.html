@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>photoShow</title>
+	<link rel="stylesheet" type="text/css" href="images/photoShow/css/button1.css">
+</head>
+<style type="text/css">
+  *{
+  	margin:0;
+  	padding: 0;
+  	overflow: hidden;
+  }
+  body{
+  	width: 100%;
+  	height: 100%;
+  	background: url(images/bg.png);
+  	background-color: #440B50;
+  }
+  .photoCase{
+  	width: 910px;
+  	height: 570px;
+  	margin:140px auto;
+  }
+  .photoCase ul{
+  	width: 100%;
+  	height: 100%;
+  	list-style: none;
+  }
+  .photoCase ul li{
+  	width: 236px;
+  	height: 165px;
+  	float: left;
+  	margin:4px;
+  	background-color: #FFF;
+  	box-shadow: 2px 2px 60px #000;
+  	cursor:pointer;
+  }
+  .photoCase ul li img{
+  	width: 230px;
+  	height: 159px;
+  	padding: 3px;
+  }
+  .overScreen{
+  	width: 100%;
+  	height: 100%;
+  	position: absolute;
+  	top:0px;
+  	left:0px;
+  	/*background-color: black;
+  	opacity: 0.8;*/
+  	background: rgba(0,0,0,0.8);
+  }
+  .hide{
+  	display: none;
+  }
+  .windowShow{
+  	width: 100%;
+  	height: 100%;
+  }
+  .windowShow .picWindow{
+  	width: 800px;
+  	height: 600px;
+  	position: absolute;
+  	top:-200px;
+  	left:0;
+  	right:0;
+  	bottom: 0;
+  	margin:auto;
+  	box-shadow: 0px 0px 40px #fff;
+  }
+  .picWindow img{
+  	width: 800px;
+  	height: 600px;
+  }
+  .btns{
+  	width: 300px;
+  	height: 100px;
+  	position: absolute;
+  	top:0;
+  	left:0;
+  	right:0;
+  	bottom:-600px;
+  	margin:auto;
+  }
+  .first{
+  	z-index: 2;
+  }
+  .second{
+  	z-index: 1;
+  }
+  .warning{
+  	width: 150px;
+  	height: 30px;
+  	background-color: white;
+  	opacity: 0.8;
+  	color: gray;
+  	font-weight: bold;
+  	text-align: center;
+  	padding: 13px;
+  	border-radius: 6px;
+  	position: absolute;
+  	top:0;
+  	left:0;
+  	right:0;
+  	bottom:200px;
+  	margin:auto;
+  	z-index: 3;
+  }
+</style>
+<body>
+<div class="photoCase">
+  <ul>
+    <li data-index=1><img src="images/photoShow/main/1.jpg"></li>  <!-- TODO 想添加一个鼠标hover弹出解释的功能 -->
+    <li data-index=2><img src="images/photoShow/main/2.jpg"></li>
+    <li data-index=3><img src="images/photoShow/main/3.jpg"></li>
+    <li data-index=4><img src="images/photoShow/main/4.jpg"></li>
+    <li data-index=5><img src="images/photoShow/main/5.jpg"></li>
+    <li data-index=6><img src="images/photoShow/main/6.jpg"></li>
+    <li data-index=7><img src="images/photoShow/main/7.jpg"></li>
+    <li data-index=8><img src="images/photoShow/main/8.jpg"></li>
+    <li data-index=9><img src="images/photoShow/main/9.jpg"></li>
+  </ul>
+</div>
+<div class="overScreen hide">
+  <div class="windowShow">
+    <div class="picWindow second"><img src=""></div>
+    <div class="picWindow first"><img src=""/></div>
+    <div class="btns">
+      <a class="button back" href="javascript:void(0)">&nbsp;&nbsp;&nbsp; BACK &nbsp;&nbsp;&nbsp;</a>
+      <a class="button next" href="javascript:void(0)">&nbsp;&nbsp;&nbsp; NEXT &nbsp;&nbsp;&nbsp;</a>
+      <a class="button close" href="javascript:void(0)">&nbsp;&nbsp;&nbsp; CLOSE &nbsp;&nbsp;&nbsp;</a> 
+    </div>
+    <div class="warning hide">已经是最后一张!</div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+<script type="text/javascript">
+
+
+$(".photoCase ul li").click(function(){
+	var file
+	var url;
+	var imgCount = 5;
+    var nowPosition = 1;
+	$(".overScreen").attr("class","overScreen");
+	//准备第一张图片
+	file = $(this).attr("data-index");
+	url = "images/photoShow/show/"+file+"/"+nowPosition+".jpg"
+	$(".first img").attr("src",url);
+	$(".close").click(function(){
+		$(".warning").html("").attr("class","warning hide");
+		$(".overScreen").attr("class","overScreen hide");
+	});
+	$(".next").click(function(){
+		$(".warning").html("").attr("class","warning hide");
+		
+		if($(".picWindow").is(":animated")){
+			return;
+		}
+		if(nowPosition<5){
+			nowPosition++;
+			//准备第二张图片
+		    url = "images/photoShow/show/"+file+"/"+nowPosition+".jpg"
+		    $(".second img").attr("src",url);
+		    //动画，将第一张从右调到后面
+		    $(".first").animate({"left":'60%'},500,function(){
+			    $(".second").attr("class","picWindow first");
+			    $(this).attr("class","picWindow second");
+			    $(this).animate({"left":'0'},500);
+		    });
+	    }else{
+	    	$(".warning").html("已经是最后一张！").attr("class","warning");
+	    }
+	});
+	$(".back").click(function(){
+		$(".warning").html("").attr("class","warning hide");
+		
+		if($(".picWindow").is(":animated")){
+			return;
+		}
+		if(nowPosition>1){
+			nowPosition--;
+			//准备第二张图片
+		    url = "images/photoShow/show/"+file+"/"+nowPosition+".jpg"
+		    $(".second img").attr("src",url);
+		    //动画，将第二张从左调到前面
+		    $(".second").animate({"right":'60%'},500,function(){
+			    $(".first").attr("class","picWindow second");
+			    $(this).attr("class","picWindow first");
+			    $(this).animate({"right":'0'},500);
+		    });
+	    }else{
+	    	$(".warning").html("已经是第一张！").attr("class","warning");
+	    }
+	});
+
+});
+</script>
+  
+</script>
+</html>

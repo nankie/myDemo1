@@ -1,0 +1,67 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>3d</title>
+ </head>
+
+ <style>
+  .cube{
+  	width:400px;
+  	height: 400px;
+  	margin: 100px auto;
+  	position: relative;
+  	/*perspective: 1000px;*/
+  	transform-style: preserve-3d;
+  	transform: rotateX(20deg) rotateY(20deg);
+    transition-duration: 8s;
+  }
+  .cube:hover{
+  	transform: rotateX(180deg) rotateY(180deg);
+  }
+  .apart{
+  	width: 100%;
+  	height: 100%;
+  	text-align: center;
+  	position: absolute;
+  	/*opacity: 0.5;*/
+  	font-size: 30px;
+  	font-weight: bold;
+  }
+  .front{
+  	background-color: blue;
+  	transform:translateZ(-200px);
+  }
+  .back{
+  	background-color: red;
+  	transform:translateZ(200px);
+  }
+  .left{
+  	background-color: pink;
+  	transform: rotateY(90deg) translateZ(-200px);
+  } 
+  .right{
+  	background-color: yellow;
+  	transform: rotateY(90deg) translateZ(200px);
+  }
+  .up{
+  	background-color: gray;
+  	transform: rotateX(90deg) translateZ(200px);
+  }
+  .down{
+  	background-color: green;
+  	transform: rotateX(90deg) translateZ(-200px);
+  }
+ </style>
+
+ <body>
+ 	<div class="cube">
+ 	  <div class="apart front">front</div>
+ 	  <div class="apart back">back</div>
+ 	  <div class="apart left">left</div>
+ 	  <div class="apart right">right</div>
+ 	  <div class="apart up">up</div>
+ 	  <div class="apart down">down</div>
+ 	</div>
+ </body>
+ </html>

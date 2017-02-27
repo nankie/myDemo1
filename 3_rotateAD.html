@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rotateAD</title>
+</head>
+<style type="text/css">
+  *{
+  	margin: 0px;
+  	padding: 0px;
+  }
+  html, body{
+  	width:100%;
+  	height:100%;
+  	overflow: hidden;
+  }
+  .content{
+  	position: relative;
+  	width:100%;
+  	height:100%;
+  }
+  .content .ad_content{
+  	width:100%;
+  	height:100%;
+  	background-image: url(images/bg.png);
+  	text-align: center;
+  }
+  .content .ad_content img{
+  	/*display: none;*/
+  }
+  .content .ad_content:nth-child(1){
+  	background-color: red;
+  }
+  .content .ad_content:nth-child(2){
+  	background-color: gray;
+  }
+  .content .ad_content:nth-child(3){
+  	background-color: blue;
+  }
+  .content .ad_content:nth-child(4){
+  	background-color: green;
+  }
+  .content .ad_content:nth-child(5){
+  	background-color: brown;
+  }
+  .nav{
+  	position: fixed;
+  	height: 100px;
+  	width: 40px;
+  	right: 3%;
+  	top: 35%;
+  }
+  .nav ul li{
+  	list-style: none;
+  	width:15px;
+  	height: 15px;
+  	border-radius: 50%;
+  	border:1px solid #fff;
+  	margin: 12px;
+  	box-shadow: 1px 1px 8px #000;
+  }
+  .nav ul .focus{
+    background-color: white;
+    opacity: 0.7;
+  }
+  .admove{
+    /*animation-name:admove;
+    animation-duration:1s;
+    animation-fill-mode:forwards;
+    animation-delay:0.2s;
+    -webkit-animation-name:admove;
+    -webkit-animation-duration:1s;
+    -webkit-animation-fill-mode:forwards;
+    -webkit-animation-delay:0.2s;*/
+    animation:admove 1s ease-in-out;
+    -webkit-animation:admove 1s ease-in-out;
+  }
+  .ds_content{
+    /*定位练手一：利用父relative限制子absolute定位，缺点：不同屏幕分辨率不兼容*/
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .dsTitle{
+    width:50%;
+    height:50%;
+    position: absolute;
+    top:12%;
+    left:8%;
+    animation:fadeIn 3s ease-in-out;
+    -webkit-animation:fadeIn 3s ease-in-out;
+  }
+  .dsTitle img{
+    width: 30%;
+  }
+  .ds1{
+    width:50%;
+    height:50%;
+    position: absolute;
+    top:46%;
+    left:13%;
+  }
+  .ds1 img{
+    width: 50%;
+  }
+  .ds2{
+    width:50%;
+    height:50%;
+    position: absolute;
+    top:14%;
+    left:22%;
+  }
+  .ds2 img{
+    width: 20%;
+  }
+  .ds3{
+    width:50%;
+    height:50%;
+    position: absolute;
+    top:12%;
+    left:40%;
+  }
+  .ds3 img{
+    width: 43.5%;
+  }
+  
+</style>
+<style id="keyframes">
+  @-webkit-keyframes fadeIn {
+    0% {
+    opacity: 0; /*初始状态 透明度为0*/
+    }
+    50% {
+    opacity: 0; /*中间状态 透明度为0*/
+    }
+    100% {
+    opacity: 1; /*结尾状态 透明度为1*/
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+    opacity: 0; /*初始状态 透明度为0*/
+    }
+    50% {
+    opacity: 0; /*中间状态 透明度为0*/
+    }
+    100% {
+    opacity: 1; /*结尾状态 透明度为1*/
+    }
+  }
+</style>
+<style id="dynamic_keyframes"></style><!-- 动态改变keyframes -->
+
+<body>
+	<div class="content" id="content">
+      <div class="ad_content"></div>
+      <div class="ad_content">
+        <div class="ds_content">
+          <div class="dsTitle"><img src="images/ds0.gif"/></div>
+          <div class="ds1"><img src="images/ds1.jpg"/></div>
+          <div class="ds2"><img src="images/ds2.jpg"/></div>
+          <div class="ds3"><img src="images/ds3.jpg"/></div>
+        </div>
+      </div>
+      <div class="ad_content"></div>
+      <div class="ad_content"></div>
+      <div class="ad_content"></div>
+	</div>
+	<div class="nav">
+	  <ul>
+	    <li class="focus"></li>
+	    <li class=""></li>
+	    <li class=""></li>
+	    <li class=""></li>
+	    <li class=""></li>
+	  </ul>
+	</div>
+
+<!-- *********************************************script****************************************************** -->
+  <script type="text/javascript">
+
+  var itemNum = 0; //第几屏
+  var nowPosition = 0; //当前动画位置
+  function initKeyframes(from,to){ //动态更改动画轨迹参数
+    var keyframes = document.getElementById("dynamic_keyframes");
+    keyframes.innerHTML = '@-webkit-keyframes admove{from {top:'+from+'px;} to{top:'+to+'px;} }\n'
+    +'@keyframes admove{from {top:'+from+'px;} to{top:'+to+'px;} }';
+  }
+  var adListener = function(e){
+    var h = document.body.clientHeight; //动态获取网页可见内容的高度
+    var from;
+    var to;
+    if(e.wheelDelta>0){
+      if(itemNum<=0){
+        return;
+      }
+      itemNum--;
+    }else{
+      if(itemNum>=4){
+        return;
+      }
+      itemNum++;
+    }
+    for(var i = 0;i<5;i++){
+      document.querySelectorAll(".nav ul li")[i].classList.remove("focus");
+    }
+    document.querySelectorAll(".nav ul li")[itemNum].classList.add("focus");
+    var from = nowPosition; //from为上次记录位置
+    var to = -itemNum*h; //第几屏乘以屏高，为元素的偏移距离
+    nowPosition = to; //记录当前位置
+    initKeyframes(from,to);
+    document.getElementById("content").classList.add("admove");
+    document.onmousewheel = null;
+  }
+  document.getElementById("content").addEventListener("animationend",function(){ //动画完毕监听
+    this.classList.remove("admove");
+    this.setAttribute("style","top:"+nowPosition+"px;");
+    document.onmousewheel = adListener;
+  });
+  document.onmousewheel = adListener; //思路：执行动画开始后删除滚轮监听，动画执行完毕后再重新给以监听，避免动画重叠影响
+</script>
+</html>

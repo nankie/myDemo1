@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>xiaomi</title>
+</head>
+<style type="text/css">
+*{
+    margin:0;
+    padding:0;
+}
+.content{
+	width:930px;
+	height:490px;
+	margin: 30px auto;
+}
+.meu{
+	width: 100%;
+	height: 30px;
+}
+.meu h2{
+	width: 248px;
+	height: 100%;
+	float:left;
+	background-color: red;
+	font-size: 18px;
+	text-align: center;
+	line-height: 30px;
+	color: white;
+}
+.meu ul{
+	width:682px;
+	height:100%;
+	list-style:none;
+	float:left;
+	background-color: gray;
+}
+.meu ul li{
+	float:left;
+	padding-left:25px;
+	padding-right:25px;
+	line-height: 30px;
+	cursor:pointer;
+}
+.meu ul li:hover{
+	background-color: black;
+	color: white;
+}
+.productShow{
+	width:100%;
+	height:420px;
+}
+.productShow div{
+	float:left;
+}
+.product div{
+	position: absolute;
+}
+#meuList{
+	width: 682px;
+	background-color: white;
+	cursor: pointer;
+	display: none;
+}
+</style>
+<body>
+<div class="content">
+  <div class="meu">
+    <h2>全部商品</h2>
+    <ul>
+      <li>小米手机</li>
+      <li>平板</li>
+      <li>笔记本</li>
+      <li>其他产品</li>
+      <li>技术支持</li>
+      <li>客服</li>
+    </ul>
+  </div>
+  <div class="productShow">
+    <div><img src="images/xiaomi/left.png"></div>
+    <div class="product">
+      <div><img src="images/xiaomi/1.jpg"></div>
+      <div><img src="images/xiaomi/2.jpg"></div>
+      <div><img src="images/xiaomi/3.jpg"></div>
+      <div><img src="images/xiaomi/4.jpg"></div>
+      <div id="meuList">
+        <img src="images/xiaomi/hm1.jpg">
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+<script type="text/javascript">
+$(".meu ul li").hover(function(){
+	$("#meuList").stop(true,true).delay(300).slideDown(400);
+},function(){
+	$("#meuList").stop(true,true).slideUp(400);
+})
+</script>
+<!-- width:682+248=930  height : 420+30=450-->
+</html>
