@@ -164,38 +164,38 @@ body{
 <div class="content">
   <div class="part p1">
     <div class="logo hide"></div>
-    <div id="p1_1 hide"></div>
+    <div id="p1_1"></div>
     <div class="footer f1">NEXT...</div>
   </div>
   <div class="part p2">
     <div class="logo hide"></div>
-    <div id="p2_1 hide"></div>
+    <div id="p2_1"></div>
     <div class="footer f2">NEXT...</div>
   </div>
   <div class="part p3">
     <div class="logo hide"></div>
-    <div id="p3_1 hide"></div>
+    <div id="p3_1"></div>
     <div class="footer f3">NEXT...</div>
   </div>
   <div class="part p4">
   	<div class="logo hide"></div>
-    <div id="p4_1 hide"></div>
+    <div id="p4_1"></div>
     <div class="footer f4">NEXT...</div>
   </div>
   <div class="part p5">
   	<div class="logo hide"></div>
-    <div id="p5_1 hide"></div>
+    <div id="p5_1"></div>
     <div class="footer f5">NEXT...</div>
   </div>
   <div class="part p6">
   	<div class="logo hide"></div>
-    <div id="p6_1 hide"></div>
+    <div id="p6_1"></div>
     <div class="footer f6">NEXT...</div>
   </div>
   <div class="part p7">
   	<div class="logo hide"></div>
-    <div id="p7_1 hide"></div>
-    <div id="p7_2 hide"></div>
+    <div id="p7_1"></div>
+    <div id="p7_2"></div>
     <div class="footer f7">to be continued...</div>
   </div>
 </div>
@@ -204,7 +204,7 @@ body{
 <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
 <script type="text/javascript">
 var h; //窗口高度
-var num = 1;//当前part
+var num = 0;//当前part
 function fitSelf(){
 	h = $(window).height();
 	$(".content .part").height(h);
@@ -220,20 +220,41 @@ $(window).resize(function(){
 // 	num++;
 //  	alert(num);
 //  });
-$(document).mousewheel(function(){
-	var a = arguments[1];
-	
-	if(a<0){
-		$(".content").animate({scrollTop:-h*num},500);
-		num++;
-	}else{
-		$(".content").animate({scrollTop:h*num},500);
-		num--;
+function extend(num){
+	$("")
+} 
+$(".content").mousewheel(function(event,delta){
+	//参数1 event:event.pageX，event.pageY为触发滚动的鼠标坐标
+	//参数2 delta:滚动的值，上滚为正
+	// var delta = arguments[1];
+	// 有一个bug，快速滚会出问题
+	if(!($(".content").is(":animated"))){
+		$(".f1").html("delta:"+delta+"--num:"+num);
+		if(delta<0){ //next
+		    if(num<6){
+			    num++;
+		        $(".content").animate({"top":"-"+num*h+"px"},1000);
+		        $(".content").css("top","-"+num*h+"px");
+		    }else{
+		    	num=0;
+		    	$(".content").animate({"top":"-"+num*h+"px"},1000);
+		        $(".content").css("top","-"+num*h+"px");
+		    }
+	    }else if(delta>0){
+		    if(num>0){
+			    num--;
+		        $(".content").animate({"top":"-"+num*h+"px"},1000);
+		        $(".content").css("top","-"+num*h+"px");
+		    }
+	    }
 	}
-
-	
+	// $(".content").unbind("mousewheel"); //解决bug
 
 });
+
+
+
+
 
 
 
