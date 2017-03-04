@@ -234,17 +234,14 @@ $(".content").mousewheel(function(event,delta){
 		    if(num<6){
 			    num++;
 		        $(".content").animate({"top":"-"+num*h+"px"},1000);
-		        $(".content").css("top","-"+num*h+"px");
 		    }else{
 		    	num=0;
 		    	$(".content").animate({"top":"-"+num*h+"px"},1000);
-		        $(".content").css("top","-"+num*h+"px");
 		    }
 	    }else if(delta>0){
 		    if(num>0){
 			    num--;
 		        $(".content").animate({"top":"-"+num*h+"px"},1000);
-		        $(".content").css("top","-"+num*h+"px");
 		    }
 	    }
 	}
