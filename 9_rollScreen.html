@@ -204,52 +204,19 @@ body{
 <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
 <script type="text/javascript">
 var h; //窗口高度
-var num = 0;//当前part
+var partNum = 0;//当前part
 function fitSelf(){
-	h = $(window).height();
+	h = document.body.clientHeight;
 	$(".content .part").height(h);
 }
 fitSelf();
 $(window).resize(function(){
 	fitSelf();
 });
-// $(document).mousewheel(function(){
-// 	alert("ok");
-// });
-// $(".content").mousewheel(function(){
-// 	num++;
-//  	alert(num);
-//  });
-function extend(num){
-	$("")
-} 
-$(".content").mousewheel(function(event,delta){
-	//参数1 event:event.pageX，event.pageY为触发滚动的鼠标坐标
-	//参数2 delta:滚动的值，上滚为正
-	// var delta = arguments[1];
-	// 有一个bug，快速滚会出问题
-	if(!($(".content").is(":animated"))){
-		$(".f1").html("delta:"+delta+"--num:"+num);
-		if(delta<0){ //next
-		    if(num<6){
-			    num++;
-		        $(".content").animate({"top":"-"+num*h+"px"},1000);
-		    }else{
-		    	num=0;
-		    	$(".content").animate({"top":"-"+num*h+"px"},1000);
-		    }
-	    }else if(delta>0){
-		    if(num>0){
-			    num--;
-		        $(".content").animate({"top":"-"+num*h+"px"},1000);
-		    }
-	    }
-	}
-	// $(".content").unbind("mousewheel"); //解决bug
+document.onmousewheel=null;
+var wheelevent = function(){
 
-});
-
-
+}
 
 
 
