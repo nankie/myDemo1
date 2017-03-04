@@ -9,7 +9,7 @@
 	margin:0;
     padding:0;
 }
-body{
+body,html{
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
@@ -203,20 +203,29 @@ body{
 <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
 <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
 <script type="text/javascript">
+
+//wheelcat
+//rollPage页面滚动 rollNav导航滚动
 var h; //窗口高度
 var partNum = 0;//当前part
-function fitSelf(){
+
+var wheelevent = function(e){
 	h = document.body.clientHeight;
-	$(".content .part").height(h);
-}
-fitSelf();
-$(window).resize(function(){
-	fitSelf();
-});
-document.onmousewheel=null;
-var wheelevent = function(){
+	if(e.wheelDelta>0){
+		if(partNum>0){
+			partNum--;
+			$(".content").animate({"top":"-"+partNum*h+"px"},600);
+		}
+	}else{
+		if(partNum<6){
+			partNum++;
+			$(".content").animate({"top":"-"+partNum*h+"px"},600);
+		}
+	}
 
 }
+
+document.onmousewheel=wheelevent;
 
 
 
